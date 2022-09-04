@@ -26,3 +26,6 @@ replay_pid*
 # developer tests
 db.properties
 **/src/application/Test.java
+
+# others
+.metadata/
