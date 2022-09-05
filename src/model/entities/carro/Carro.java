@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.entities.categoria.Categoria;
 import model.entities.locacao.Locacao;
 import model.enums.Cor;
 
@@ -13,22 +14,30 @@ public class Carro {
 	private	Cor cor;
 	private Integer ano;
 	private LocalDate dataAquisicao;
+	private Categoria categoria;
 	
 	private List<Locacao> locacoes = new ArrayList<>();
-	
-	
 	
 	public Carro() {
 		
 	}
 
-	public Carro(String modelo, String placa, Cor cor, Integer ano, LocalDate dataAquisicao, Locacao locacao) {
+	public Carro(
+			String modelo,
+			String placa,
+			Cor cor,
+			Integer ano,
+			LocalDate dataAquisicao,
+			Locacao locacao,
+			Categoria categoria
+	) {
 		this.modelo = modelo;
 		this.placa = placa;
 		this.cor = cor;
 		this.ano = ano;
 		this.dataAquisicao = dataAquisicao;
 		this.locacoes.add(locacao);
+		this.categoria = categoria;
 	}
 
 	public String getModelo() {
@@ -78,6 +87,15 @@ public class Carro {
 	public void addLocacoes(Locacao locacao) {
 		this.locacoes.add(locacao);
 	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+	
 	
 	
 	
