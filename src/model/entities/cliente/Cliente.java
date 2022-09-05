@@ -3,6 +3,8 @@ package model.entities.cliente;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.entities.locacao.Locacao;
+
 public class Cliente {
 
 	private Integer id;
@@ -10,7 +12,7 @@ public class Cliente {
 	private String cpf;
 	private String email;
 	private List<Telefone> telefones = new ArrayList<>();
-	// Create attribute List<locacao>
+	private List<Locacao> locacoes = new ArrayList<>();
 	
 	public Integer getId() {
 		return id;
@@ -18,13 +20,14 @@ public class Cliente {
 	public Cliente() {}
 	
 	public Cliente(
-			Integer id, String nome, String cpf, String email, String telefone
+			Integer id, String nome, String cpf, String email, Telefone telefone, Locacao locacao
 	) {
 		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.email = email;
 		this.addTelefone(telefone);
+		this.addLocacao(locacao);
 	}
 	public void setId(Integer id) {
 		this.id = id;
@@ -50,8 +53,14 @@ public class Cliente {
 	public List<Telefone> getTelefones() {
 		return telefones;
 	}
-	public void addTelefone(String telefone) {
-		this.telefones.add(new Telefone(telefone));
+	public void addTelefone(Telefone telefone) {
+		this.telefones.add(telefone);
+	}
+	public List<Locacao> getLocacoes() {
+		return locacoes;
+	}
+	public void addLocacao(Locacao locacao) {
+		this.locacoes.add(locacao);
 	}
 	
 	
