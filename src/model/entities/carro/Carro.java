@@ -1,7 +1,10 @@
 package model.entities.carro;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import model.entities.locacao.Locacao;
 import model.enums.Cor;
 
 public class Carro {
@@ -11,16 +14,21 @@ public class Carro {
 	private Integer ano;
 	private LocalDate dataAquisicao;
 	
+	private List<Locacao> locacoes = new ArrayList<>();
+	
+	
+	
 	public Carro() {
 		
 	}
 
-	public Carro(String modelo, String placa, Cor cor, Integer ano, LocalDate dataAquisicao) {
+	public Carro(String modelo, String placa, Cor cor, Integer ano, LocalDate dataAquisicao, Locacao locacao) {
 		this.modelo = modelo;
 		this.placa = placa;
 		this.cor = cor;
 		this.ano = ano;
 		this.dataAquisicao = dataAquisicao;
+		this.locacoes.add(locacao);
 	}
 
 	public String getModelo() {
@@ -61,6 +69,14 @@ public class Carro {
 
 	public void setDataAquisicao(LocalDate dataAquisicao) {
 		this.dataAquisicao = dataAquisicao;
+	}
+
+	public List<Locacao> getLocacoes() {
+		return locacoes;
+	}
+
+	public void addLocacoes(Locacao locacao) {
+		this.locacoes.add(locacao);
 	}
 	
 	
