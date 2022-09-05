@@ -9,14 +9,14 @@ public class Locacao {
 	
 	public Locacao() {
 		
-	}
+	}	
 
 	public Locacao(Integer id, LocalDateTime dataRetirada, LocalDateTime dataDevolucao) {
 		this.id = id;
 		this.dataRetirada = dataRetirada;
 		this.dataDevolucao = dataDevolucao;
 	}
-
+	
 	public Integer getId() {
 		return id;
 	}
