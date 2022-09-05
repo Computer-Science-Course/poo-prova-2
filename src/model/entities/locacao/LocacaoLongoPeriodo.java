@@ -3,22 +3,22 @@ package model.entities.locacao;
 import java.time.LocalDateTime;
 
 public class LocacaoLongoPeriodo extends Locacao{
-	private Integer porcentagemDesconto;
+	private Double porcentagemDesconto;
 	
 	public LocacaoLongoPeriodo() {
 		super();
 	}
 
-	public LocacaoLongoPeriodo(Integer id, LocalDateTime dataRetirada, LocalDateTime dataDevolucao,Integer porcentagemDesconto) {
+	public LocacaoLongoPeriodo(Integer id, LocalDateTime dataRetirada, LocalDateTime dataDevolucao,Double porcentagemDesconto) {
 		super();
 		this.porcentagemDesconto = porcentagemDesconto;
 	}
 
-	public Integer getPorcentagemDesconto() {
+	public Double getPorcentagemDesconto() {
 		return porcentagemDesconto;
 	}
 
-	public void setPorcentagemDesconto(Integer porcentagemDesconto) {
+	public void setPorcentagemDesconto(Double porcentagemDesconto) {
 		this.porcentagemDesconto = porcentagemDesconto;
 	}
 	
