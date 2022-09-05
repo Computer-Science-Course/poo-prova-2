@@ -9,6 +9,7 @@ import model.entities.locacao.Locacao;
 import model.enums.Cor;
 
 public class Carro {
+	private Integer id;
 	private String modelo;
 	private String placa;
 	private	Cor cor;
@@ -23,6 +24,7 @@ public class Carro {
 	}
 
 	public Carro(
+			Integer id,
 			String modelo,
 			String placa,
 			Cor cor,
@@ -31,6 +33,7 @@ public class Carro {
 			Locacao locacao,
 			Categoria categoria
 	) {
+		this.id = id;
 		this.modelo = modelo;
 		this.placa = placa;
 		this.cor = cor;
@@ -95,6 +98,15 @@ public class Carro {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
 	
 	
 	
