@@ -1,9 +1,16 @@
 package application;
 
 import java.sql.Connection;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Scanner;
 
+import model.dao.carro.CarroDaoJDBC;
+import model.dao.categoria.CategoriaDaoJDBC;
+import model.entities.carro.Carro;
+import model.entities.categoria.Categoria;
+import model.enums.Cor;
 import model.service.DataBase;
 import views.UI.Menu;
 
@@ -17,6 +24,8 @@ public class Program {
 		System.out.println("Estabelecendo conexão com o banco de dados...");
 		Connection conn = DataBase.getConnection();
 		System.out.println("Conectado!");
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		
 		try {
 			while(option != 5) {
@@ -57,9 +66,34 @@ public class Program {
 						while(option != 6) {
 							Menu.carro.showMenu();
 							option = scanner.nextInt();
+							CarroDaoJDBC carroDao = new CarroDaoJDBC(conn);
+							CategoriaDaoJDBC categoriaDao = new CategoriaDaoJDBC(conn);
 							switch(option) {
 							case 1:
 								// Cadastrar novo carro
+								scanner = new Scanner(System.in);
+								System.out.print("Modelo: ");
+								String modelo = scanner.nextLine();
+								
+								System.out.print("Placa: ");
+								String placa = scanner.nextLine();
+								
+								System.out.print("cor: ");
+								Cor cor = Cor.valueOf(scanner.nextLine().toUpperCase());
+								
+								System.out.print("Ano: ");
+								Integer ano = scanner.nextInt();
+								
+								scanner = new Scanner(System.in);
+								System.out.print("Data de aquisição: ");
+								LocalDate dataAquisicao = LocalDate.parse(scanner.nextLine(), formatter);
+								
+								System.out.print("Categoria: ");
+								Categoria categoria = categoriaDao.pegarCategoria(2);
+								
+								carroDao.criarCarro(new Carro(
+										modelo, placa, cor, ano, dataAquisicao, categoria
+								));
 								break;
 							case 2:
 								// Listar carror
@@ -161,7 +195,7 @@ public class Program {
 		}finally {
 			scanner.close();
 			System.out.println("Desconectando do banco de dados...");
-			DataBase.closeConnectrion();
+			DataBase.closeConnection();
 			System.out.println("Desconectado!");
 		}
 		

@@ -24,22 +24,18 @@ public class Carro {
 	}
 
 	public Carro(
-			Integer id,
 			String modelo,
 			String placa,
 			Cor cor,
 			Integer ano,
 			LocalDate dataAquisicao,
-			Locacao locacao,
 			Categoria categoria
 	) {
-		this.id = id;
 		this.modelo = modelo;
 		this.placa = placa;
 		this.cor = cor;
 		this.ano = ano;
 		this.dataAquisicao = dataAquisicao;
-		this.locacoes.add(locacao);
 		this.categoria = categoria;
 	}
 
