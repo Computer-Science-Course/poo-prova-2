@@ -6,11 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
+import model.dao.categoria.CategoriaDaoJDBC;
 import model.entities.carro.Carro;
-import model.service.DbException;
+import model.entities.categoria.Categoria;
+import model.enums.Cor;
 import model.service.DataBase;
+import model.service.DbException;
 
 public class CarroDaoJDBC implements CarroDao{
 	private Connection conn;
@@ -62,8 +67,34 @@ public class CarroDaoJDBC implements CarroDao{
 
 	@Override
 	public List<Carro> listarTodosCarros() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Carro> carros = new ArrayList<>();
+		try {
+			String query = "SELECT * FROM carro ";
+			
+			Statement statement = conn.createStatement();
+;
+			ResultSet result = statement.executeQuery(query);
+			
+			CategoriaDaoJDBC categoriaDao = new CategoriaDaoJDBC(conn);
+			
+			while(result.next()) {
+				Carro newCar = new Carro(
+						result.getString("modelo"), result.getString("placa"),
+						Cor.valueOf(result.getString("cor")), result.getInt("ano"),
+						LocalDate.parse(result.getString("data_aquisicao")),
+						categoriaDao.pegarCategoria(result.getInt("id_categoria"))
+					);
+				newCar.setId(result.getInt("id"));
+				
+				carros.add(newCar);
+			}
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		
+		return carros;
 	}
 
 	@Override

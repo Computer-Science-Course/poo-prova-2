@@ -3,6 +3,7 @@ package application;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -89,14 +90,18 @@ public class Program {
 								LocalDate dataAquisicao = LocalDate.parse(scanner.nextLine(), formatter);
 								
 								System.out.print("Categoria: ");
-								Categoria categoria = categoriaDao.pegarCategoria(2);
+								Categoria categoria = categoriaDao.pegarCategoria(scanner.nextInt());
 								
 								carroDao.criarCarro(new Carro(
 										modelo, placa, cor, ano, dataAquisicao, categoria
 								));
 								break;
 							case 2:
-								// Listar carror
+								// Listar carros
+								List<Carro> carros = carroDao.listarTodosCarros();
+								for(Carro carro: carros) {
+									System.out.println(carro);
+								}
 								break;
 							case 3:
 								// Listar carros por categoria

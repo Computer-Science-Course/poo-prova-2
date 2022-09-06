@@ -1,6 +1,7 @@
 package model.entities.carro;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,9 +103,14 @@ public class Carro {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+	@Override
+	public String toString() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		return id + ", " + modelo + ", " + placa + ", " + cor + ", " + ano
+				+ ", " + dataAquisicao.format(formatter) + ", " + categoria.getDescricao();
+	}
 	
-	
-	
-	
+		
 	
 }
