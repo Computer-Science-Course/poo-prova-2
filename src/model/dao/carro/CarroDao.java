@@ -8,7 +8,7 @@ import model.entities.categoria.Categoria;
 public interface CarroDao {
 	void criarCarro(Carro carro);
 	List<Carro> listarTodosCarros();
-	List<Carro> listarCarrosPorCategoria(Categoria categoria);
+	List<Carro> listarCarrosPorCategoria(Integer id_categoria);
 	void editarCarro(Integer id);
 	void excluirCarro(Integer id);
 }
