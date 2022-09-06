@@ -13,12 +13,12 @@ USE cursojdbc;
 CREATE TABLE IF NOT EXISTS categoria(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     descricao VARCHAR(45),
-    precoDiaria DOUBLE
+    preco_diaria DOUBLE
 );
 
 CREATE TABLE IF NOT EXISTS carro(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    model VARCHAR(45) NOT NULL,
+    modelo VARCHAR(45) NOT NULL,
     placa varchar(10) NOT NULL,
     cor VARCHAR(10) NOT NULL,
     ano INT NOT NULL,
