@@ -68,6 +68,7 @@ public class Program {
 							Menu.carro.showMenu();
 							option = scanner.nextInt();
 							CarroDaoJDBC carroDao = new CarroDaoJDBC(conn);
+							List<Carro> carros;
 							CategoriaDaoJDBC categoriaDao = new CategoriaDaoJDBC(conn);
 							switch(option) {
 							case 1:
@@ -85,7 +86,7 @@ public class Program {
 								System.out.print("Ano: ");
 								Integer ano = scanner.nextInt();
 								
-								scanner = new Scanner(System.in);
+								scanner.nextLine();
 								System.out.print("Data de aquisição: ");
 								LocalDate dataAquisicao = LocalDate.parse(scanner.nextLine(), formatter);
 								
@@ -98,13 +99,19 @@ public class Program {
 								break;
 							case 2:
 								// Listar carros
-								List<Carro> carros = carroDao.listarTodosCarros();
+								carros = carroDao.listarTodosCarros();
 								for(Carro carro: carros) {
 									System.out.println(carro);
 								}
 								break;
 							case 3:
 								// Listar carros por categoria
+								System.out.print("Categoria: ");
+								Integer id_categoria = scanner.nextInt();
+								carros = carroDao.listarCarrosPorCategoria(id_categoria);
+								for(Carro carro: carros) {
+									System.out.println(carro);
+								}
 								break;
 							case 4:
 								// Editar carro

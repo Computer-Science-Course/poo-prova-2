@@ -99,8 +99,33 @@ public class CarroDaoJDBC implements CarroDao{
 
 	@Override
 	public List<Carro> listarCarrosPorCategoria(Integer id_categoria) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Carro> carros = new ArrayList<>();
+		try {
+			String query = "SELECT * FROM carro WHERE id_categoria = " + id_categoria;
+			
+			Statement statement = conn.createStatement();
+;
+			ResultSet result = statement.executeQuery(query);
+			
+			CategoriaDaoJDBC categoriaDao = new CategoriaDaoJDBC(conn);
+			
+			while(result.next()) {
+				Carro newCar = new Carro(
+						result.getString("modelo"), result.getString("placa"),
+						Cor.valueOf(result.getString("cor")), result.getInt("ano"),
+						LocalDate.parse(result.getString("data_aquisicao")),
+						categoriaDao.pegarCategoria(result.getInt("id_categoria"))
+					);
+				newCar.setId(result.getInt("id"));
+				
+				carros.add(newCar);
+			}
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		
+		return carros;
 	}
 
 	@Override
