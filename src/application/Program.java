@@ -115,6 +115,33 @@ public class Program {
 								break;
 							case 4:
 								// Editar carro
+								scanner = new Scanner(System.in);
+								System.out.println("Id do carro:");
+								Integer id_editCarro = scanner.nextInt();
+								
+								scanner.nextLine();
+								System.out.print("Modelo: ");
+								String editModelo = scanner.nextLine();
+								
+								System.out.print("Placa: ");
+								String editPlaca = scanner.nextLine();
+								
+								System.out.print("cor: ");
+								Cor editCor = Cor.valueOf(scanner.nextLine().toUpperCase());
+								
+								System.out.print("Ano: ");
+								Integer editAno = scanner.nextInt();
+								
+								scanner.nextLine();
+								System.out.print("Data de aquisição: ");
+								LocalDate editDataAquisicao = LocalDate.parse(scanner.nextLine(), formatter);
+								
+								System.out.print("Categoria: ");
+								Categoria editCategoria = categoriaDao.pegarCategoria(scanner.nextInt());
+								
+								carroDao.editarCarro(id_editCarro, new Carro(
+										editModelo, editPlaca, editCor, editAno, editDataAquisicao, editCategoria
+								));
 								break;
 							case 5:
 								// Excluir carro

@@ -8,6 +8,6 @@ public interface CarroDao {
 	void criarCarro(Carro carro);
 	List<Carro> listarTodosCarros();
 	List<Carro> listarCarrosPorCategoria(Integer id_categoria);
-	void editarCarro(Integer id);
+	void editarCarro(Integer id, Carro carro);
 	void excluirCarro(Integer id);
 }

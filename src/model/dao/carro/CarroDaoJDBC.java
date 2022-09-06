@@ -12,7 +12,6 @@ import java.util.List;
 
 import model.dao.categoria.CategoriaDaoJDBC;
 import model.entities.carro.Carro;
-import model.entities.categoria.Categoria;
 import model.enums.Cor;
 import model.service.DataBase;
 import model.service.DbException;
@@ -129,8 +128,35 @@ public class CarroDaoJDBC implements CarroDao{
 	}
 
 	@Override
-	public void editarCarro(Integer id) {
-		// TODO Auto-generated method stub
+	public void editarCarro(Integer id, Carro carro) {
+		
+		PreparedStatement statement = null;
+		try {			
+			String query = "UPDATE carro " +
+					 "SET " +
+					 "modelo =  ?, " +
+					 "placa =  ?, " +
+					 "cor =  ?, " +
+					 "ano =  ?, " +
+					 "data_aquisicao =  ?, " +
+					 "id_categoria =  ? " +
+					 "WHERE " +
+					 "(id = " + id + ")";
+			
+			statement = conn.prepareStatement(query);
+			statement.setString(1, carro.getModelo());
+			statement.setString(2, carro.getPlaca());
+			statement.setString(3, carro.getCor().name());
+			statement.setInt(4, carro.getAno());
+			statement.setTimestamp(5, Timestamp.valueOf(carro.getDataAquisicao().atStartOfDay()));
+			statement.setInt(6, carro.getCategoria().getId());
+			
+			statement.executeUpdate();			
+			
+		}
+		catch (SQLException error) {
+			error.printStackTrace();
+		}
 		
 	}
 
