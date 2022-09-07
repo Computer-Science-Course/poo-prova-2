@@ -169,7 +169,7 @@ public class CarroDaoJDBC implements CarroDao{
 							"WHERE " +
 							"id = ?";
 			statement = conn.prepareStatement(query);
-			statement.setInt(1,2);
+			statement.setInt(1,id);
 			
 			statement.executeUpdate();
 		}

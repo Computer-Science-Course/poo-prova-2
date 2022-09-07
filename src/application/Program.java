@@ -82,6 +82,11 @@ public class Program {
 									break;
 								case 4:
 									// Excluir categoria
+									scanner = new Scanner(System.in);
+									System.out.println("Id da categoria:");
+									Integer id_deleteCategoria = scanner.nextInt();
+									
+									categoriaDaoJDBC.excluirCategoria(id_deleteCategoria);
 									break;
 								case 5:
 									// Voltar para o menu anterior

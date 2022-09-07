@@ -145,7 +145,7 @@ public class ClienteDaoJDBC implements ClienteDao{
 							"WHERE " +
 							"id = ?";
 			statement = conn.prepareStatement(query);
-			statement.setInt(1,2);
+			statement.setInt(1, id);
 			
 			statement.executeUpdate();
 		}

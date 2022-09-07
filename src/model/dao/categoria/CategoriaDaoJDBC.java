@@ -131,7 +131,23 @@ PreparedStatement statement = null;
 
 	@Override
 	public void excluirCategoria(Integer id) {
-		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement statement = null;
+		
+		try {
+			conn = DataBase.getConnection();
+			
+			String query = "DELETE FROM categoria " +
+							"WHERE " +
+							"id = ?";
+			statement = conn.prepareStatement(query);
+			statement.setInt(1, id);
+			
+			statement.executeUpdate();
+		}
+		catch (SQLException error) {
+			throw new DbException(error.getMessage());
+		}
 		
 	}
 
