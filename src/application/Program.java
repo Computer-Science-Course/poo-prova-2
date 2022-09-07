@@ -41,9 +41,20 @@ public class Program {
 						while(option != 5) {
 							Menu.categoria.showMenu();
 							option = scanner.nextInt();
+							CategoriaDaoJDBC categoriaDaoJDBC = new CategoriaDaoJDBC(conn);
 							switch(option) {
 								case 1:
 									// Cadastrar nova categoria
+									scanner = new Scanner(System.in);
+									System.out.print("Descrição: ");
+									String descricao = scanner.nextLine();
+									
+									System.out.print("Preço por diária: R$");
+									Double preco_diaria = scanner.nextDouble();
+									
+									categoriaDaoJDBC.criarCategoria(new Categoria(
+											descricao, preco_diaria
+									));
 									break;
 								case 2:
 									// Listar categorias

@@ -9,8 +9,7 @@ public class Categoria {
 		
 	}
 
-	public Categoria(Integer id, String descricao, Double precoDiaria) {
-		this.id = id;
+	public Categoria(String descricao, Double precoDiaria) {
 		this.descricao = descricao;
 		this.precoDiaria = precoDiaria;
 	}

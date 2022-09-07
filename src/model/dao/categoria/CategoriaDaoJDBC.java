@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.List;
 
 import model.entities.categoria.Categoria;
+import model.entities.cliente.Telefone;
 import model.service.DataBase;
 import model.service.DbException;
 
@@ -21,7 +22,27 @@ public class CategoriaDaoJDBC implements CategoriaDao{
 	
 	@Override
 	public void criarCategoria(Categoria categoria) {
-		// TODO Auto-generated method stub
+PreparedStatement statement = null;
+		
+		try {
+			String query = "INSERT INTO categoria " +
+					"(descricao, preco_diaria) " +
+					"VALUES " +
+					"(?, ?)";
+			
+			statement = conn.prepareStatement(
+				query, 
+				Statement.RETURN_GENERATED_KEYS);
+
+			statement.setString(1, categoria.getDescricao());
+			statement.setDouble(2, categoria.getPrecoDiaria());
+
+			statement.executeUpdate();
+			
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
 		
 	}
 
