@@ -105,8 +105,27 @@ PreparedStatement statement = null;
 	}
 
 	@Override
-	public void editarCategoria(Integer id) {
-		// TODO Auto-generated method stub
+	public void editarCategoria(Categoria categoria, Integer id) {
+		
+		PreparedStatement statement = null;
+		
+		try {			
+			String query = "UPDATE categoria " +
+					 "SET " +
+					 "descricao =  ?, " +
+					 "preco_diaria =  ?" +
+					 "WHERE " +
+					 "(id = " + id + ")";
+			
+			statement = conn.prepareStatement(query);
+			statement.setString(1, categoria.getDescricao());
+			statement.setDouble(2, categoria.getPrecoDiaria());
+			
+			statement.executeUpdate();			
+		}
+		catch (SQLException error) {
+			error.printStackTrace();
+		}
 		
 	}
 

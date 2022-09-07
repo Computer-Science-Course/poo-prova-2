@@ -8,6 +8,6 @@ public interface CategoriaDao {
 	void criarCategoria(Categoria categoria);
 	List<Categoria> listarTodasCategorias();
 	Categoria pegarCategoria(Integer id);
-	void editarCategoria(Integer id);
+	void editarCategoria(Categoria categoria, Integer id);
 	void excluirCategoria(Integer id);
 }

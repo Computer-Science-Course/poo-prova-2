@@ -65,6 +65,20 @@ public class Program {
 									break;
 								case 3:
 									// Editar categoria
+									scanner = new Scanner(System.in);
+									System.out.println("Id da categoria:");
+									Integer id_editCategoria = scanner.nextInt();
+									
+									scanner.nextLine();
+									System.out.print("Descrição: ");
+									String editDescricao = scanner.nextLine();
+									
+									System.out.print("Preço por diária: R$");
+									Double editDPeco_diaria = scanner.nextDouble();
+									
+									categoriaDaoJDBC.editarCategoria(new Categoria(
+											editDescricao, editDPeco_diaria
+									), id_editCategoria);
 									break;
 								case 4:
 									// Excluir categoria
