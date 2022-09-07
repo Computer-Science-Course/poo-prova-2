@@ -162,8 +162,23 @@ public class CarroDaoJDBC implements CarroDao{
 
 	@Override
 	public void excluirCarro(Integer id) {
-		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement statement = null;
 		
+		try {
+			conn = DataBase.getConnection();
+			
+			String query = "DELETE FROM carro " +
+							"WHERE " +
+							"id = ?";
+			statement = conn.prepareStatement(query);
+			statement.setInt(1,2);
+			
+			statement.executeUpdate();
+		}
+		catch (SQLException error) {
+			throw new DbException(error.getMessage());
+		}		
 	}
 	
 	

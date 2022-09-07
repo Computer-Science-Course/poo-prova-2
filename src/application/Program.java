@@ -145,6 +145,10 @@ public class Program {
 								break;
 							case 5:
 								// Excluir carro
+								scanner = new Scanner(System.in);
+								System.out.print("Id do carro: ");
+								Integer id_excluirCarro = scanner.nextInt();
+								carroDao.excluirCarro(id_excluirCarro);
 								break;
 							case 6:
 								// Voltar para o menu anterior
