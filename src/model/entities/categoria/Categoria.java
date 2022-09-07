@@ -37,6 +37,17 @@ public class Categoria {
 	public void setPrecoDiaria(Double precoDiaria) {
 		this.precoDiaria = precoDiaria;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder stringBuilder = new StringBuilder();
+		
+		stringBuilder.append(this.id + ", ");
+		stringBuilder.append(this.descricao + ", ");
+		stringBuilder.append(String.format("%.2f", this.precoDiaria));
+		
+		return stringBuilder.toString();
+	}
 	
 	
 	

@@ -58,6 +58,10 @@ public class Program {
 									break;
 								case 2:
 									// Listar categorias
+									List<Categoria> categorias = categoriaDaoJDBC.listarTodasCategorias();
+									for(Categoria categoria: categorias) {
+										System.out.println(categoria);
+									}
 									break;
 								case 3:
 									// Editar categoria

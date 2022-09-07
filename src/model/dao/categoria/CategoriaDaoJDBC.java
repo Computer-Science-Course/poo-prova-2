@@ -5,9 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
+import model.dao.cliente.TelefoneDaoJDBC;
 import model.entities.categoria.Categoria;
+import model.entities.cliente.Cliente;
 import model.entities.cliente.Telefone;
 import model.service.DataBase;
 import model.service.DbException;
@@ -40,23 +43,46 @@ PreparedStatement statement = null;
 			statement.executeUpdate();
 			
 		}
-		catch (SQLException e) {
-			throw new DbException(e.getMessage());
+		catch (SQLException error) {
+			throw new DbException(error.getMessage());
 		}
 		
 	}
 
 	@Override
 	public List<Categoria> listarTodasCategorias() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Categoria> categorias = new ArrayList<>();
+		
+		try {
+			String query = "SELECT * FROM categoria ";
+			
+			Statement statement = conn.createStatement();
+;
+			ResultSet result = statement.executeQuery(query);
+			
+			while(result.next()) {
+				Integer id = result.getInt("id");
+				
+				Categoria newCategory = new Categoria(
+						result.getString("descricao"),
+						result.getDouble("preco_diaria")
+				);	
+				newCategory.setId(id);	
+				categorias.add(newCategory);
+			}
+		}
+		catch (SQLException error) {
+			throw new DbException(error.getMessage());
+		}
+		return categorias;
 	}
 
 	@Override
 	public Categoria pegarCategoria(Integer id) {
 		
 		try {
-			String query = "SELECT id, descricao, preco_diaria FROM categoria " +
+			String query = "SELECT * FROM categoria " +
 					"WHERE id = " + id;
 			
 			Statement statement = conn.createStatement();
@@ -64,13 +90,15 @@ PreparedStatement statement = null;
 			ResultSet result = statement.executeQuery(query);
 			
 			while(result.next()) {
-				return new Categoria(
-						result.getInt("id"), result.getString("descricao"), result.getDouble("preco_diaria")
+				Categoria categoria = new Categoria(
+						result.getString("descricao"), result.getDouble("preco_diaria")
 				);
+				categoria.setId(result.getInt("id"));
+				return categoria;
 			}
 		}
-		catch (SQLException e) {
-			throw new DbException(e.getMessage());
+		catch (SQLException error) {
+			throw new DbException(error.getMessage());
 		}	
 		
 		return null;
