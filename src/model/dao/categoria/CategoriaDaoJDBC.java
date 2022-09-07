@@ -25,7 +25,8 @@ public class CategoriaDaoJDBC implements CategoriaDao{
 	
 	@Override
 	public void criarCategoria(Categoria categoria) {
-PreparedStatement statement = null;
+		
+		PreparedStatement statement = null;
 		
 		try {
 			String query = "INSERT INTO categoria " +

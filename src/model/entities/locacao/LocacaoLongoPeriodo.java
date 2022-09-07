@@ -9,8 +9,8 @@ public class LocacaoLongoPeriodo extends Locacao{
 		super();
 	}
 
-	public LocacaoLongoPeriodo(Integer id, LocalDateTime dataRetirada, LocalDateTime dataDevolucao,Double porcentagemDesconto) {
-		super();
+	public LocacaoLongoPeriodo(LocalDateTime dataRetirada, LocalDateTime dataDevolucao,Double porcentagemDesconto) {
+		super(dataRetirada, dataDevolucao);
 		this.porcentagemDesconto = porcentagemDesconto;
 	}
 

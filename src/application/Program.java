@@ -2,6 +2,7 @@ package application;
 
 import java.sql.Connection;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
@@ -10,10 +11,13 @@ import java.util.Scanner;
 import model.dao.carro.CarroDaoJDBC;
 import model.dao.categoria.CategoriaDaoJDBC;
 import model.dao.cliente.ClienteDaoJDBC;
+import model.dao.locacao.LocacaoDaoJDBC;
 import model.entities.carro.Carro;
 import model.entities.categoria.Categoria;
 import model.entities.cliente.Cliente;
 import model.entities.cliente.Telefone;
+import model.entities.locacao.LocacaoDiaria;
+import model.entities.locacao.LocacaoLongoPeriodo;
 import model.enums.Cor;
 import model.service.DataBase;
 import views.UI.Menu;
@@ -30,6 +34,7 @@ public class Program {
 		System.out.println("Conectado!");
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		DateTimeFormatter formatterWithHour = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 		
 		try {
 			while(option != 5) {
@@ -276,9 +281,38 @@ public class Program {
 						while(option != 6) {
 							Menu.locacao.showMenu();
 							option = scanner.nextInt();
+							LocacaoDaoJDBC locacaoDao = new LocacaoDaoJDBC(conn);
 							switch(option) {
 							case 1:
 								// Cadastrar nova locação
+								// LocacaoLongoPeriodo(3, LocalDateTime.now(), LocalDateTime.now().plusDays(10), 10.0)
+								scanner.nextLine();
+								System.out.print("Id do cliente: ");
+								Integer id_cliente = scanner.nextInt();
+								
+								System.out.print("Id do carro: ");
+								Integer id_carro = scanner.nextInt();
+								
+								scanner.nextLine();
+								System.out.print("Data retirada (dd/MM/yyyy HH:mm): ");
+								LocalDateTime dataRetirada = LocalDateTime.parse(scanner.nextLine(), formatterWithHour);
+								
+								System.out.print("Dias previstos pra devolução: ");
+								Integer dias_previstos = scanner.nextInt();
+								
+								if(dias_previstos > 10) {									
+									System.out.print("Porcentagem do desconto: ");
+									Double desconto = (double) scanner.nextInt() / 100;
+									
+									locacaoDao.criarLocacaoLongoPeriodo(new LocacaoLongoPeriodo(
+											dataRetirada, null, desconto
+									), id_cliente, id_carro);
+								}else {
+									locacaoDao.criarLocacaoDiaria(new LocacaoDiaria(
+											dataRetirada, null,	dias_previstos
+									), id_cliente, id_carro);
+								}
+								
 								break;
 							case 2:
 								// Devolver locação

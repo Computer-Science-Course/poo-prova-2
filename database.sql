@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS locacao(
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     data_retirada DATETIME NOT NULL,
     data_devolucao DATETIME,
-    dias_previstos_devolucao INT NOT NULL,
+    dias_previstos_devolucao INT,
     porcentagem_desconto DOUBLE,
     id_cliente INT NOT NULL,
     id_carro INT NOT NULL,

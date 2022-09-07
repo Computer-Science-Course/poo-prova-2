@@ -9,8 +9,8 @@ public class LocacaoDiaria extends Locacao{
 		super();
 	}
 
-	public LocacaoDiaria(Integer id, LocalDateTime dataRetirada, LocalDateTime dataDevolucao,Integer diasPrevistoDevolucao) {
-		super(id, dataRetirada, dataDevolucao);
+	public LocacaoDiaria(LocalDateTime dataRetirada, LocalDateTime dataDevolucao,Integer diasPrevistoDevolucao) {
+		super(dataRetirada, dataDevolucao);
 		this.diasPrevistoDevolucao = diasPrevistoDevolucao;
 	}
 

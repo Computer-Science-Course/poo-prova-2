@@ -11,8 +11,7 @@ public class Locacao {
 		
 	}	
 
-	public Locacao(Integer id, LocalDateTime dataRetirada, LocalDateTime dataDevolucao) {
-		this.id = id;
+	public Locacao(LocalDateTime dataRetirada, LocalDateTime dataDevolucao) {
 		this.dataRetirada = dataRetirada;
 		this.dataDevolucao = dataDevolucao;
 	}
