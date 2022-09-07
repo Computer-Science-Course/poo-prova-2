@@ -200,10 +200,31 @@ public class Program {
 									break;
 								case 3:
 									// Editar cliente
+									scanner = new Scanner(System.in);
+									System.out.print("Id: ");
+									Integer id_edit_cliente = scanner.nextInt();
+									
+									scanner.nextLine();
+									System.out.print("Nome: ");
+									String edit_cliente_nome = scanner.nextLine();
+									
+									System.out.print("CPF: ");
+									String edit_cliente_cpf = scanner.nextLine();
+									
+									System.out.print("Email: ");
+									String edit_cliente_email = scanner.nextLine();
+									
+									clienteDao.editarCliente(new Cliente(
+											edit_cliente_nome, edit_cliente_cpf, edit_cliente_cpf, null
+									), id_edit_cliente);
+									
 									break;
 								case 4:
 									// Excluir cliente
-									
+									scanner = new Scanner(System.in);
+									System.out.print("Id: ");
+									Integer id_delete_cliente = scanner.nextInt();
+									clienteDao.excluirCliente(id_delete_cliente);
 									break;
 								case 5:
 									// Voltar para o menu anterior

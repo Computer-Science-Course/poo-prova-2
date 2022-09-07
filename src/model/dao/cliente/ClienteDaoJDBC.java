@@ -5,11 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import model.entities.cliente.Cliente;
 import model.entities.cliente.Telefone;
+import model.service.DataBase;
 import model.service.DbException;
 
 public class ClienteDaoJDBC implements ClienteDao{
@@ -105,14 +107,51 @@ public class ClienteDaoJDBC implements ClienteDao{
 	}
 
 	@Override
-	public void editarCliente(Integer id) {
-		// TODO Auto-generated method stub
+	public void editarCliente(Cliente cliente, Integer id) {
+		PreparedStatement statement = null;
+		
+		try {			
+			String query = "UPDATE cliente " +
+					 "SET " +
+					 "nome =  ?, " +
+					 "cpf =  ?, " +
+					 "email =  ?" +
+					 "WHERE " +
+					 "(id = " + id + ")";
+			
+			statement = conn.prepareStatement(query);
+			statement.setString(1, cliente.getNome());
+			statement.setString(2, cliente.getCpf());
+			statement.setString(3, cliente.getEmail());
+			
+			statement.executeUpdate();			
+			
+		}
+		catch (SQLException error) {
+			error.printStackTrace();
+		}
 		
 	}
 
 	@Override
 	public void excluirCliente(Integer id) {
-		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement statement = null;
+		
+		try {
+			conn = DataBase.getConnection();
+			
+			String query = "DELETE FROM cliente " +
+							"WHERE " +
+							"id = ?";
+			statement = conn.prepareStatement(query);
+			statement.setInt(1,2);
+			
+			statement.executeUpdate();
+		}
+		catch (SQLException error) {
+			throw new DbException(error.getMessage());
+		}
 		
 	}
 }
