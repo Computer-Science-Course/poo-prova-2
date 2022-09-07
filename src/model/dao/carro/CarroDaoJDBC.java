@@ -57,9 +57,6 @@ public class CarroDaoJDBC implements CarroDao{
 		}
 		catch (SQLException e) {
 			throw new DbException(e.getMessage());
-		} 
-		finally {
-			DataBase.closeStatement(statement);
 		}
 		
 	}

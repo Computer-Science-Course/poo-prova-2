@@ -20,14 +20,12 @@ public class Cliente {
 	public Cliente() {}
 	
 	public Cliente(
-			Integer id, String nome, String cpf, String email, Telefone telefone, Locacao locacao
+			String nome, String cpf, String email, Telefone telefone
 	) {
-		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
 		this.email = email;
 		this.addTelefone(telefone);
-		this.addLocacao(locacao);
 	}
 	public void setId(Integer id) {
 		this.id = id;

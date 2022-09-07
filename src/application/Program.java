@@ -9,8 +9,11 @@ import java.util.Scanner;
 
 import model.dao.carro.CarroDaoJDBC;
 import model.dao.categoria.CategoriaDaoJDBC;
+import model.dao.cliente.ClienteDaoJDBC;
 import model.entities.carro.Carro;
 import model.entities.categoria.Categoria;
+import model.entities.cliente.Cliente;
+import model.entities.cliente.Telefone;
 import model.enums.Cor;
 import model.service.DataBase;
 import views.UI.Menu;
@@ -166,9 +169,27 @@ public class Program {
 						while(option != 5) {
 							Menu.cliente.showMenu();
 							option = scanner.nextInt();
+							ClienteDaoJDBC clienteDao = new ClienteDaoJDBC(conn);
 							switch(option) {
 								case 1:
 									// Cadastrar novo cliente
+									scanner = new Scanner(System.in);
+									System.out.print("Nome: ");
+									String cliente_nome = scanner.nextLine();
+									
+									System.out.print("CPF: ");
+									String cliente_cpf = scanner.nextLine();
+									
+									System.out.print("Email: ");
+									String cliente_email = scanner.nextLine();
+									
+									System.out.print("Telefone: ");
+									Telefone cliente_tel = new Telefone(scanner.nextLine());
+									
+									clienteDao.criarCliente(new Cliente(
+											cliente_nome, cliente_cpf, cliente_email, cliente_tel
+									));
+									
 									break;
 								case 2:
 									// Listar clientes
@@ -178,6 +199,7 @@ public class Program {
 									break;
 								case 4:
 									// Excluir cliente
+									
 									break;
 								case 5:
 									// Voltar para o menu anterior
