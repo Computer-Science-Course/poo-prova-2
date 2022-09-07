@@ -25,7 +25,9 @@ public class Cliente {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.email = email;
-		this.addTelefone(telefone);
+		if(telefone != null) {
+			this.addTelefone(telefone);			
+		}
 	}
 	public void setId(Integer id) {
 		this.id = id;
@@ -59,6 +61,18 @@ public class Cliente {
 	}
 	public void addLocacao(Locacao locacao) {
 		this.locacoes.add(locacao);
+	}
+	@Override
+	public String toString() {
+		StringBuilder stringBuilder = new StringBuilder();
+		
+		stringBuilder.append(this.id + ", " + this.nome + ", " + this.cpf + ", " + this.email + "\n");
+		stringBuilder.append("Telefones:\n");
+		for(Telefone telefone: this.getTelefones()) {
+			stringBuilder.append("\t" + telefone.getNumero());
+		}
+		
+		return stringBuilder.toString();
 	}
 	
 	

@@ -193,6 +193,10 @@ public class Program {
 									break;
 								case 2:
 									// Listar clientes
+									List<Cliente> clientes = clienteDao.listarTodosClientes();
+									for(Cliente cliente: clientes) {
+										System.out.println(cliente);
+									}
 									break;
 								case 3:
 									// Editar cliente

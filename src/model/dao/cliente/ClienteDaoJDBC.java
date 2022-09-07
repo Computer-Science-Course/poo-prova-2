@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import model.entities.cliente.Cliente;
@@ -71,8 +72,36 @@ public class ClienteDaoJDBC implements ClienteDao{
 
 	@Override
 	public List<Cliente> listarTodosClientes() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Cliente> clientes = new ArrayList<>();
+		try {
+			String query = "SELECT * FROM cliente ";
+			
+			Statement statement = conn.createStatement();
+;
+			ResultSet result = statement.executeQuery(query);
+			
+			while(result.next()) {
+				Integer id = result.getInt("id");
+				TelefoneDaoJDBC telefoneDao = new TelefoneDaoJDBC(conn);
+				List<Telefone> telefones = telefoneDao.listarTodosTelefones(id);
+				
+				Cliente newClient = new Cliente(
+						result.getString("nome"),
+						result.getString("cpf"),
+						result.getString("email"),
+						null
+				);
+				for(Telefone telefone: telefones) {
+					newClient.addTelefone(telefone);
+				}	
+				newClient.setId(id);	
+				clientes.add(newClient);
+			}
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		return clientes;
 	}
 
 	@Override

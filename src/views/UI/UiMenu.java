@@ -41,7 +41,7 @@ public class UiMenu {
 			System.out.printf("    %d - %s\n", index, option);
 			index++;
 		}
-		System.out.println(" -> ");
+		System.out.print(" -> ");
 	}
 	
 }

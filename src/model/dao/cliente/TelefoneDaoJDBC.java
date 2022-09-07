@@ -23,9 +23,8 @@ public class TelefoneDaoJDBC implements TelefoneDao{
 		List<Telefone> telefones = new ArrayList<>();
 		
 		try {
-			String query = "SELECT * FROM telefone" +
+			String query = "SELECT * FROM telefone " +
 							"WHERE id_cliente = " + id_cliente;
-			
 			Statement statement = conn.createStatement();
 ;
 			ResultSet result = statement.executeQuery(query);
