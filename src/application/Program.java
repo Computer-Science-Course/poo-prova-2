@@ -131,7 +131,7 @@ public class Program {
 								Integer ano = scanner.nextInt();
 								
 								scanner.nextLine();
-								System.out.print("Data de aquisição: ");
+								System.out.print("Data de aquisição (dd/MM/yyyy): ");
 								LocalDate dataAquisicao = LocalDate.parse(scanner.nextLine(), formatter);
 								
 								System.out.print("Categoria: ");
@@ -338,9 +338,10 @@ public class Program {
 								}else if((locacaoDevolvida instanceof LocacaoLongoPeriodo)) {
 									valorLocacao = locacaoService.valorLocacaoLongoPeriodo((LocacaoLongoPeriodo) locacaoDevolvida);									
 								}
+								System.out.println("\nTempo da locação: ");
 								System.out.printf("Dias: %d, Horas: %d, Minutos:%d\n", locacaoService.getDays(), locacaoService.getHours(), locacaoService.getMinutes());
-								System.out.printf("Valor final da locação: R$%.2f\n", valorLocacao);
 								System.out.println(locacaoDevolvida);
+								System.out.printf("Valor final da locação: R$%.2f\n", valorLocacao);
 								break;
 							case 3:
 								// Listar locações
