@@ -12,6 +12,7 @@ import java.util.List;
 
 import model.dao.categoria.CategoriaDaoJDBC;
 import model.entities.carro.Carro;
+import model.entities.categoria.Categoria;
 import model.enums.Cor;
 import model.service.DataBase;
 import model.service.DbException;
@@ -21,6 +22,37 @@ public class CarroDaoJDBC implements CarroDao{
 	
 	public CarroDaoJDBC(Connection conn) {
 		this.conn = conn;
+	}
+	
+	@Override
+	public Carro pegarCarro(Integer id) {
+		
+		try {
+			String query = "SELECT * FROM carro " +
+					"WHERE id = " + id;
+			
+			Statement statement = conn.createStatement();
+;
+			ResultSet result = statement.executeQuery(query);
+			
+			CategoriaDaoJDBC categoriaDao = new CategoriaDaoJDBC(conn);
+			
+			while(result.next()) {
+				Carro carro = new Carro(
+						result.getString("modelo"), result.getString("placa"),
+						Cor.valueOf(result.getString("cor")), result.getInt("ano"),
+						LocalDate.parse(result.getString("data_aquisicao")),
+						categoriaDao.pegarCategoria(result.getInt("id_categoria"))
+				);
+				carro.setId(result.getInt("id"));
+				return carro;
+			}
+		}
+		catch (SQLException error) {
+			throw new DbException(error.getMessage());
+		}	
+		
+		return null;
 	}
 
 	@Override

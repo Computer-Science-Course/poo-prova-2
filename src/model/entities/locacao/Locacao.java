@@ -2,10 +2,13 @@ package model.entities.locacao;
 
 import java.time.LocalDateTime;
 
+import model.entities.carro.Carro;
+
 public class Locacao {
 	private Integer id;
 	private LocalDateTime dataRetirada;
 	private LocalDateTime dataDevolucao;
+	private Carro carro;
 	
 	public Locacao() {}	
 
@@ -37,7 +40,13 @@ public class Locacao {
 	public void setDataDevolucao(LocalDateTime dataDevolucao) {
 		this.dataDevolucao = dataDevolucao;
 	}
-	
-	
+
+	public Carro getCarro() {
+		return carro;
+	}
+
+	public void setCarro(Carro carro) {
+		this.carro = carro;
+	}
 	
 }

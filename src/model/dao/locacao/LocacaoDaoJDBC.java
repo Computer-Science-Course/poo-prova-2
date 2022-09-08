@@ -11,10 +11,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.entities.categoria.Categoria;
+import model.dao.carro.CarroDaoJDBC;
 import model.entities.locacao.Locacao;
 import model.entities.locacao.LocacaoDiaria;
 import model.entities.locacao.LocacaoLongoPeriodo;
+import model.service.DataBase;
 import model.service.DbException;
 
 public class LocacaoDaoJDBC implements LocacaoDao{
@@ -23,6 +24,55 @@ public class LocacaoDaoJDBC implements LocacaoDao{
 	
 	public LocacaoDaoJDBC(Connection conn) {
 		this.conn = conn;
+	}
+	
+	@Override
+	public Locacao pegarLocacao(Integer id) {
+		
+		DateTimeFormatter formatterWithHour = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		
+		try {
+			String query = "SELECT * FROM locacao " +
+					"WHERE id = " + id;
+			
+			Statement statement = conn.createStatement();
+;
+			ResultSet result = statement.executeQuery(query);
+			
+			CarroDaoJDBC carroDao = new CarroDaoJDBC(conn);
+			
+			while(result.next()) {
+				if(result.getString("dias_previstos_devolucao") != null) {
+					LocalDateTime data_devolucao = result.getString("data_devolucao") == null ?
+							null : LocalDateTime.parse(result.getString("data_devolucao"), formatterWithHour);
+					
+					LocacaoDiaria rent = new LocacaoDiaria(
+						LocalDateTime.parse(result.getString("data_retirada"), formatterWithHour),	
+						data_devolucao,
+						result.getInt("dias_previstos_devolucao")
+					);						
+					rent.setId(id);
+					rent.setCarro(carroDao.pegarCarro(result.getInt("id_carro")));
+					return rent;
+				}else{
+					LocalDateTime data_devolucao = result.getString("data_devolucao") == null ?
+							null : LocalDateTime.parse(result.getString("data_devolucao"), formatterWithHour);
+					
+					LocacaoLongoPeriodo rent = new LocacaoLongoPeriodo(
+							LocalDateTime.parse(result.getString("data_retirada"), formatterWithHour),	
+							data_devolucao,
+							result.getDouble("porcentagem_desconto")
+							);						
+					rent.setCarro(carroDao.pegarCarro(result.getInt("id_carro")));
+					rent.setId(id);
+					return rent;
+				}
+			}
+		}
+		catch (SQLException error) {
+			throw new DbException(error.getMessage());
+		}
+		return null;
 	}
 
 	@Override
@@ -83,8 +133,22 @@ public class LocacaoDaoJDBC implements LocacaoDao{
 
 	@Override
 	public void devolverLocacao(Integer id, LocalDateTime dataDevolucao) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement statement = null;
+		try {			
+			String query = "UPDATE locacao " +
+					 "SET " +
+					 "data_devolucao = ? " +
+					 "WHERE " +
+					 "(id = " + id + ")";
+			
+			statement = conn.prepareStatement(query);
+			statement.setTimestamp(1, Timestamp.valueOf(dataDevolucao));
+			
+			statement.executeUpdate();
+		}
+		catch (SQLException error) {
+			error.printStackTrace();
+		}
 	}
 
 	@Override
@@ -180,7 +244,23 @@ public class LocacaoDaoJDBC implements LocacaoDao{
 
 	@Override
 	public void excluirLocacao(Integer id) {
-		// TODO Auto-generated method stub
+		Connection conn = null;
+		PreparedStatement statement = null;
+		
+		try {
+			conn = DataBase.getConnection();
+			
+			String query = "DELETE FROM locacao " +
+							"WHERE " +
+							"id = ?";
+			statement = conn.prepareStatement(query);
+			statement.setInt(1, id);
+			
+			statement.executeUpdate();
+		}
+		catch (SQLException error) {
+			throw new DbException(error.getMessage());
+		}
 		
 	}
 }

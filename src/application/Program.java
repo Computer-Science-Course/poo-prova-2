@@ -21,6 +21,7 @@ import model.entities.locacao.LocacaoDiaria;
 import model.entities.locacao.LocacaoLongoPeriodo;
 import model.enums.Cor;
 import model.service.DataBase;
+import model.service.locacao.LocacaoService;
 import views.UI.Menu;
 
 public class Program {
@@ -318,6 +319,28 @@ public class Program {
 								break;
 							case 2:
 								// Devolver locação
+								scanner = new Scanner(System.in);
+								System.out.print("Id da locacao: ");
+								Integer id_returnLocacao = scanner.nextInt();
+								
+								scanner.nextLine();
+								System.out.print("Data devolucao (dd/MM/yyyy HH:mm): ");
+								LocalDateTime dataDevolucao = LocalDateTime.parse(scanner.nextLine(), formatterWithHour);
+								
+								locacaoDao.devolverLocacao(id_returnLocacao, dataDevolucao);
+								Locacao locacaoDevolvida = locacaoDao.pegarLocacao(id_returnLocacao);
+								
+								LocacaoService locacaoService = new LocacaoService();
+								
+								Double valorLocacao = null;
+								if(locacaoDevolvida instanceof LocacaoDiaria) {	
+									valorLocacao = locacaoService.valorLocacaoDiaria((LocacaoDiaria) locacaoDevolvida);
+								}else if((locacaoDevolvida instanceof LocacaoLongoPeriodo)) {
+									valorLocacao = locacaoService.valorLocacaoLongoPeriodo((LocacaoLongoPeriodo) locacaoDevolvida);									
+								}
+								System.out.printf("Dias: %d, Horas: %d, Minutos:%d\n", locacaoService.getDays(), locacaoService.getHours(), locacaoService.getMinutes());
+								System.out.printf("Valor final da locação: R$%.2f\n", valorLocacao);
+								System.out.println(locacaoDevolvida);
 								break;
 							case 3:
 								// Listar locações
@@ -338,6 +361,10 @@ public class Program {
 								break;
 							case 5:
 								// Excluir locação
+								scanner = new Scanner(System.in);
+								System.out.print("Id: ");
+								Integer id_deleteLocacao = scanner.nextInt();
+								locacaoDao.excluirLocacao(id_deleteLocacao);
 								break;
 							case 6:
 								// Voltar para o menu anterior

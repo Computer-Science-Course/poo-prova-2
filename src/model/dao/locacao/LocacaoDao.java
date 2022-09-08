@@ -3,11 +3,13 @@ package model.dao.locacao;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import model.entities.categoria.Categoria;
 import model.entities.locacao.Locacao;
 import model.entities.locacao.LocacaoDiaria;
 import model.entities.locacao.LocacaoLongoPeriodo;
 
 public interface LocacaoDao {
+	public Locacao pegarLocacao(Integer id);
 	void criarLocacaoDiaria(LocacaoDiaria locacao, Integer id_cliente, Integer id_carro);
 	void criarLocacaoLongoPeriodo(LocacaoLongoPeriodo locacao, Integer id_cliente, Integer id_carro);
 	void devolverLocacao(Integer id, LocalDateTime dataDevolucao);
