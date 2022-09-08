@@ -8,10 +8,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
-import model.dao.carro.CarroDaoJDBC;
-import model.dao.categoria.CategoriaDaoJDBC;
-import model.dao.cliente.ClienteDaoJDBC;
-import model.dao.locacao.LocacaoDaoJDBC;
+import model.dao.carro.CarroDao;
+import model.dao.categoria.CategoriaDao;
+import model.dao.cliente.ClienteDao;
+import model.dao.factory.DaoFactory;
+import model.dao.locacao.LocacaoDao;
 import model.entities.carro.Carro;
 import model.entities.categoria.Categoria;
 import model.entities.cliente.Cliente;
@@ -31,10 +32,6 @@ public class Program {
 		Scanner scanner = new Scanner(System.in);
 		Integer option = 0;
 		
-		System.out.println("Estabelecendo conexão com o banco de dados...");
-		Connection conn = DataBase.getConnection();
-		System.out.println("Conectado!");
-		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		DateTimeFormatter formatterWithHour = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 		
@@ -48,7 +45,7 @@ public class Program {
 						while(option != 5) {
 							Menu.categoria.showMenu();
 							option = scanner.nextInt();
-							CategoriaDaoJDBC categoriaDaoJDBC = new CategoriaDaoJDBC(conn);
+							CategoriaDao categoriaDao = DaoFactory.createCategoriaDao();
 							switch(option) {
 								case 1:
 									// Cadastrar nova categoria
@@ -59,13 +56,13 @@ public class Program {
 									System.out.print("Preço por diária: R$");
 									Double preco_diaria = scanner.nextDouble();
 									
-									categoriaDaoJDBC.criarCategoria(new Categoria(
+									categoriaDao.criarCategoria(new Categoria(
 											descricao, preco_diaria
 									));
 									break;
 								case 2:
 									// Listar categorias
-									List<Categoria> categorias = categoriaDaoJDBC.listarTodasCategorias();
+									List<Categoria> categorias = categoriaDao.listarTodasCategorias();
 									for(Categoria categoria: categorias) {
 										System.out.println(categoria);
 									}
@@ -83,7 +80,7 @@ public class Program {
 									System.out.print("Preço por diária: R$");
 									Double editDPeco_diaria = scanner.nextDouble();
 									
-									categoriaDaoJDBC.editarCategoria(new Categoria(
+									categoriaDao.editarCategoria(new Categoria(
 											editDescricao, editDPeco_diaria
 									), id_editCategoria);
 									break;
@@ -93,7 +90,7 @@ public class Program {
 									System.out.println("Id da categoria:");
 									Integer id_deleteCategoria = scanner.nextInt();
 									
-									categoriaDaoJDBC.excluirCategoria(id_deleteCategoria);
+									categoriaDao.excluirCategoria(id_deleteCategoria);
 									break;
 								case 5:
 									// Voltar para o menu anterior
@@ -111,9 +108,9 @@ public class Program {
 						while(option != 6) {
 							Menu.carro.showMenu();
 							option = scanner.nextInt();
-							CarroDaoJDBC carroDao = new CarroDaoJDBC(conn);
+							CarroDao carroDao = DaoFactory.createCarroDao();
 							List<Carro> carros;
-							CategoriaDaoJDBC categoriaDao = new CategoriaDaoJDBC(conn);
+							CategoriaDao categoriaDao = DaoFactory.createCategoriaDao();
 							switch(option) {
 							case 1:
 								// Cadastrar novo carro
@@ -210,7 +207,7 @@ public class Program {
 						while(option != 5) {
 							Menu.cliente.showMenu();
 							option = scanner.nextInt();
-							ClienteDaoJDBC clienteDao = new ClienteDaoJDBC(conn);
+							ClienteDao clienteDao = DaoFactory.createClienteDao();
 							switch(option) {
 								case 1:
 									// Cadastrar novo cliente
@@ -284,11 +281,10 @@ public class Program {
 							Menu.locacao.showMenu();
 							option = scanner.nextInt();
 							List<Locacao> locacoes;
-							LocacaoDaoJDBC locacaoDao = new LocacaoDaoJDBC(conn);
+							LocacaoDao locacaoDao = DaoFactory.createLocacaoDao();
 							switch(option) {
 							case 1:
 								// Cadastrar nova locação
-								// LocacaoLongoPeriodo(3, LocalDateTime.now(), LocalDateTime.now().plusDays(10), 10.0)
 								scanner.nextLine();
 								System.out.print("Id do cliente: ");
 								Integer id_cliente = scanner.nextInt();
