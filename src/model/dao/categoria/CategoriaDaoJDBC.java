@@ -59,7 +59,6 @@ public class CategoriaDaoJDBC implements CategoriaDao{
 			String query = "SELECT * FROM categoria ";
 			
 			Statement statement = conn.createStatement();
-;
 			ResultSet result = statement.executeQuery(query);
 			
 			while(result.next()) {

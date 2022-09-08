@@ -16,6 +16,7 @@ import model.entities.carro.Carro;
 import model.entities.categoria.Categoria;
 import model.entities.cliente.Cliente;
 import model.entities.cliente.Telefone;
+import model.entities.locacao.Locacao;
 import model.entities.locacao.LocacaoDiaria;
 import model.entities.locacao.LocacaoLongoPeriodo;
 import model.enums.Cor;
@@ -281,6 +282,7 @@ public class Program {
 						while(option != 6) {
 							Menu.locacao.showMenu();
 							option = scanner.nextInt();
+							List<Locacao> locacoes;
 							LocacaoDaoJDBC locacaoDao = new LocacaoDaoJDBC(conn);
 							switch(option) {
 							case 1:
@@ -319,9 +321,20 @@ public class Program {
 								break;
 							case 3:
 								// Listar locações
+								locacoes = locacaoDao.listarTodasLocacoes();
+								for(Locacao locacao: locacoes) {
+									System.out.println(locacao);
+								}
 								break;
 							case 4:
 								// Listar locações por clientes
+								scanner = new Scanner(System.in);
+								System.out.print("Id do cliente: ");
+								Integer id_cliente_locacao = scanner.nextInt();
+								locacoes = locacaoDao.listarTodasLocacoesPorCliente(id_cliente_locacao);
+								for(Locacao locacao: locacoes) {
+									System.out.println(locacao);
+								}
 								break;
 							case 5:
 								// Excluir locação
@@ -330,8 +343,7 @@ public class Program {
 								// Voltar para o menu anterior
 								break;
 							default:
-								System.out.println("[OPÇÃO INVÁLIDA]");
-								
+								System.out.println("[OPÇÃO INVÁLIDA]");	
 							}
 						}
 						// Reseta opção pra não sair do programa

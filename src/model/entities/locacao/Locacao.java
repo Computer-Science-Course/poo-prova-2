@@ -7,9 +7,7 @@ public class Locacao {
 	private LocalDateTime dataRetirada;
 	private LocalDateTime dataDevolucao;
 	
-	public Locacao() {
-		
-	}	
+	public Locacao() {}	
 
 	public Locacao(LocalDateTime dataRetirada, LocalDateTime dataDevolucao) {
 		this.dataRetirada = dataRetirada;

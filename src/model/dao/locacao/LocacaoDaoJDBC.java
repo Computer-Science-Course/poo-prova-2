@@ -2,12 +2,16 @@ package model.dao.locacao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
+import model.entities.categoria.Categoria;
 import model.entities.locacao.Locacao;
 import model.entities.locacao.LocacaoDiaria;
 import model.entities.locacao.LocacaoLongoPeriodo;
@@ -85,14 +89,93 @@ public class LocacaoDaoJDBC implements LocacaoDao{
 
 	@Override
 	public List<Locacao> listarTodasLocacoes() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Locacao> locacoes = new ArrayList<>();
+		DateTimeFormatter formatterWithHour = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		
+		try {
+			String query = "SELECT * FROM locacao ";
+			
+			Statement statement = conn.createStatement();
+			ResultSet result = statement.executeQuery(query);
+			
+			while(result.next()) {
+				Integer id = result.getInt("id");
+				if(result.getString("dias_previstos_devolucao") != null) {
+					LocalDateTime data_devolucao = result.getString("data_devolucao") == null ?
+							null : LocalDateTime.parse(result.getString("data_devolucao"), formatterWithHour);
+					
+					LocacaoDiaria newRent = new LocacaoDiaria(
+						LocalDateTime.parse(result.getString("data_retirada"), formatterWithHour),	
+						data_devolucao,
+						result.getInt("dias_previstos_devolucao")
+					);						
+					newRent.setId(id);	
+					locacoes.add(newRent);
+				}else{
+					LocalDateTime data_devolucao = result.getString("data_devolucao") == null ?
+							null : LocalDateTime.parse(result.getString("data_devolucao"), formatterWithHour);
+					
+					LocacaoLongoPeriodo newRent = new LocacaoLongoPeriodo(
+							LocalDateTime.parse(result.getString("data_retirada"), formatterWithHour),	
+							data_devolucao,
+							result.getDouble("porcentagem_desconto")
+							);						
+					newRent.setId(id);	
+					locacoes.add(newRent);
+				}
+			}
+		}
+		catch (SQLException error) {
+			throw new DbException(error.getMessage());
+		}
+		return locacoes;
 	}
 
 	@Override
 	public List<Locacao> listarTodasLocacoesPorCliente(Integer id_cliente) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Locacao> locacoes = new ArrayList<>();
+		DateTimeFormatter formatterWithHour = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		
+		try {
+			String query = "SELECT * FROM locacao " +
+							"WHERE id_cliente = " + id_cliente;
+			
+			Statement statement = conn.createStatement();
+			ResultSet result = statement.executeQuery(query);
+			
+			while(result.next()) {
+				Integer id = result.getInt("id");
+				if(result.getString("dias_previstos_devolucao") != null) {
+					LocalDateTime data_devolucao = result.getString("data_devolucao") == null ?
+							null : LocalDateTime.parse(result.getString("data_devolucao"), formatterWithHour);
+					
+					LocacaoDiaria newRent = new LocacaoDiaria(
+						LocalDateTime.parse(result.getString("data_retirada"), formatterWithHour),	
+						data_devolucao,
+						result.getInt("dias_previstos_devolucao")
+					);						
+					newRent.setId(id);	
+					locacoes.add(newRent);
+				}else{
+					LocalDateTime data_devolucao = result.getString("data_devolucao") == null ?
+							null : LocalDateTime.parse(result.getString("data_devolucao"), formatterWithHour);
+					
+					LocacaoLongoPeriodo newRent = new LocacaoLongoPeriodo(
+							LocalDateTime.parse(result.getString("data_retirada"), formatterWithHour),	
+							data_devolucao,
+							result.getDouble("porcentagem_desconto")
+							);						
+					newRent.setId(id);	
+					locacoes.add(newRent);
+				}
+			}
+		}
+		catch (SQLException error) {
+			throw new DbException(error.getMessage());
+		}
+		return locacoes;
 	}
 
 	@Override

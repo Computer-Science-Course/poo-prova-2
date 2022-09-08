@@ -22,6 +22,15 @@ public class LocacaoDiaria extends Locacao{
 		this.diasPrevistoDevolucao = diasPrevistoDevolucao;
 	}
 	
-	
-	
+	@Override
+	public String toString() {
+		StringBuilder stringBuilder = new StringBuilder();
+		
+		stringBuilder.append(this.getId() + ", ");
+		stringBuilder.append(this.getDataRetirada() + ", ");
+		stringBuilder.append(this.getDataDevolucao() + ", ");
+		stringBuilder.append(this.getDiasPrevistoDevolucao());
+		
+		return stringBuilder.toString();
+	}
 }

@@ -21,5 +21,19 @@ public class LocacaoLongoPeriodo extends Locacao{
 	public void setPorcentagemDesconto(Double porcentagemDesconto) {
 		this.porcentagemDesconto = porcentagemDesconto;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder stringBuilder = new StringBuilder();
+		
+		stringBuilder.append(this.getId() + ", ");
+		stringBuilder.append(this.getDataRetirada() + ", ");
+		stringBuilder.append(this.getDataDevolucao() + ", ");
+		stringBuilder.append(this.getPorcentagemDesconto());
+		
+		return stringBuilder.toString();
+	}
+	
+	
 	
 }
